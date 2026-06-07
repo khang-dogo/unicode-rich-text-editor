@@ -9,32 +9,27 @@ import {
 type PageKey = 'selection' | 'markdown'
 
 const DEFAULT_EDITOR_TEXT =
-  'Unicode fake-format hữu ích cho headline, bio, social caption. Bôi đen một đoạn ngắn rồi áp style để tạo chữ nhìn như bold hoặc italic.'
+  'Unicode fake-format hữu ích cho headline, bio, social caption. Bôi đen một đoạn ngắn rồi áp style để đổi chữ sang phiên bản nhìn như bold hoặc italic.'
 const DEFAULT_MARKDOWN =
   '# Launch note\n\n**Bold headline**\n*soft emphasis*\n***hybrid accent***\n\nDùng cho post, bio, title.'
 
-const EDITOR_SNIPPETS = [
-  'New drop available tonight',
-  'Founder mode activated',
-  'Minimal tools. Better taste.',
-]
-
+const EDITOR_SNIPPETS = ['Product launch tonight', 'Founder mode activated', 'Ship the cleaner version']
 const MARKDOWN_SNIPPETS = [
-  '**Quiet luxury** cho headline',
-  '*Italic* để nhấn một nhịp nhỏ',
-  '***Bold italic*** cho accent mạnh hơn',
+  '**Quiet confidence** cho headline',
+  '*Italic* để nhấn nhẹ một nhịp',
+  '***Bold italic*** cho đoạn cần lực hơn',
 ]
 
 const PAGE_COPY = {
   selection: {
-    kicker: 'Workflow 01',
-    title: 'Style bằng selection. Nhanh như utility, không giả làm word processor.',
-    body: 'Trang này chỉ tập trung một việc: chọn đoạn text, áp Unicode style, rồi copy ra ngoài. Ít nhiễu, ít panel, ít mỏi mắt hơn.',
+    kicker: 'Direct editing',
+    title: 'Edit trực tiếp rồi áp Unicode style lên đúng đoạn cần nhấn.',
+    body: 'Bôi đen một đoạn ngắn, bấm style, copy ra ngoài. Không giả làm word processor. Không nhồi quá nhiều panel.',
   },
   markdown: {
-    kicker: 'Workflow 02',
-    title: 'Viết bằng markdown, convert tức thì, rồi đẩy sang output sạch để paste.',
-    body: 'Dành cho lúc bạn nghĩ bằng cú pháp trước. Gõ `** * ***`, xem output plain-text ngay, rồi copy hoặc chuyển tiếp sang editor chính.',
+    kicker: 'Markdown conversion',
+    title: 'Gõ markdown trước, convert sang plain text sau, rồi paste đi nơi khác.',
+    body: 'Phù hợp khi bạn nghĩ bằng cú pháp `** * ***` trước. Viết, convert, copy hoặc đẩy sang selection page để chỉnh tiếp.',
   },
 } as const
 
@@ -48,8 +43,6 @@ function App() {
   const [markdownText, setMarkdownText] = useState(DEFAULT_MARKDOWN)
   const [selection, setSelection] = useState({ start: 0, end: 0 })
   const [copiedTarget, setCopiedTarget] = useState<'editor' | 'markdown' | null>(null)
-  const [isBooting, setIsBooting] = useState(true)
-  const [isTransitioning, setIsTransitioning] = useState(false)
   const editorRef = useRef<HTMLDivElement>(null)
 
   const markdownOutput = useMemo(() => applyMarkdownUnicode(markdownText), [markdownText])
@@ -70,11 +63,6 @@ function App() {
     handleHashChange()
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setIsBooting(false), 920)
-    return () => window.clearTimeout(timer)
   }, [])
 
   const syncSelection = () => {
@@ -138,11 +126,7 @@ function App() {
       return
     }
 
-    setIsTransitioning(true)
-    window.setTimeout(() => {
-      window.location.hash = nextPage === 'selection' ? '#selection' : '#markdown'
-      setIsTransitioning(false)
-    }, 420)
+    window.location.hash = nextPage === 'selection' ? '#selection' : '#markdown'
   }
 
   const resetEditor = () => {
@@ -154,56 +138,26 @@ function App() {
     setMarkdownText(DEFAULT_MARKDOWN)
   }
 
-  const isLoading = isBooting || isTransitioning
-
   return (
     <main className="app-shell">
-      <div className={`loading-layer ${isLoading ? 'is-visible' : ''}`} aria-hidden={!isLoading}>
-        <div className="loading-card-stack">
-          <span className="icon-card icon-card-back">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-short" />
-            <span className="icon-card-line icon-card-line-tiny" />
-          </span>
-          <span className="icon-card icon-card-mid">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-medium" />
-            <span className="icon-card-line icon-card-line-short" />
-          </span>
-          <span className="icon-card icon-card-front">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-medium" />
-            <span className="icon-card-accent" />
-          </span>
-        </div>
-        <div className="loading-copy">
-          <p className="section-label">Preparing workspace</p>
-          <strong>Đang set nhịp cho editor…</strong>
-        </div>
-      </div>
       <header className="hero-shell">
-        <div className="hero-mark" aria-hidden="true">
-          <div className="hero-mark-card hero-mark-card-back">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-short" />
-            <span className="icon-card-line icon-card-line-tiny" />
-          </div>
-          <div className="hero-mark-card hero-mark-card-mid">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-medium" />
-            <span className="icon-card-line icon-card-line-short" />
-          </div>
-          <div className="hero-mark-card hero-mark-card-front">
-            <span className="icon-card-dot" />
-            <span className="icon-card-line icon-card-line-medium" />
-            <span className="icon-card-accent" />
-          </div>
+        <div className="hero-copy">
+          <p className="eyebrow">Unicode format utility</p>
+          <h1>{PAGE_COPY[page].title}</h1>
+          <p className="hero-body">{PAGE_COPY[page].body}</p>
         </div>
 
-        <div className="hero-copy">
-          <p className="topbar-kicker">Unicode craft utility</p>
-          <h1>{PAGE_COPY[page].title}</h1>
-          <p>{PAGE_COPY[page].body}</p>
+        <div className="hero-meta">
+          <div className="meta-card">
+            <span className="meta-label">Output</span>
+            <strong>Plain text</strong>
+            <p>Không phải rich text thật. Paste được vào bio, post, headline.</p>
+          </div>
+          <div className="meta-card">
+            <span className="meta-label">Unsafe</span>
+            <strong>Code · URL · Email</strong>
+            <p>Đừng dùng fake Unicode cho thứ cần parse chính xác.</p>
+          </div>
         </div>
 
         <nav className="workflow-switcher" aria-label="Workflow switcher">
@@ -214,8 +168,8 @@ function App() {
           >
             <span className="workflow-step">01</span>
             <span>
-              <strong>Selection styler</strong>
-              <small>Bôi đen rồi format</small>
+              <strong>Selection</strong>
+              <small>Bôi đen rồi áp style</small>
             </span>
           </button>
           <button
@@ -225,8 +179,8 @@ function App() {
           >
             <span className="workflow-step">02</span>
             <span>
-              <strong>Markdown lab</strong>
-              <small>Dùng `** * ***`</small>
+              <strong>Markdown</strong>
+              <small>Convert từ `** * ***`</small>
             </span>
           </button>
         </nav>
@@ -238,10 +192,10 @@ function App() {
             <div className="panel-head">
               <div>
                 <p className="section-label">{PAGE_COPY.selection.kicker}</p>
-                <h2>Selection styler</h2>
+                <h2>Selection editor</h2>
               </div>
               <div className="panel-actions">
-                <button className="button button-ghost" type="button" onClick={resetEditor}>
+                <button className="button button-secondary" type="button" onClick={resetEditor}>
                   Reset
                 </button>
                 <button
@@ -249,34 +203,34 @@ function App() {
                   type="button"
                   onClick={() => copyOutput(editorText, 'editor')}
                 >
-                  {copiedTarget === 'editor' ? 'Copied' : 'Copy Unicode'}
+                  {copiedTarget === 'editor' ? 'Copied' : 'Copy output'}
                 </button>
               </div>
             </div>
 
-            <div className="metrics-row">
-              <div className="metric-chip">
-                <span className="metric-label">Selected</span>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <span className="stat-label">Selected</span>
                 <strong>{selectionSummary.count} ký tự</strong>
               </div>
-              <div className="metric-chip metric-chip-preview">
-                <span className="metric-label">Preview</span>
+              <div className="stat-card stat-card-wide">
+                <span className="stat-label">Preview</span>
                 <strong>{selectionSummary.preview}</strong>
               </div>
             </div>
 
             <div className="toolbar" role="toolbar" aria-label="Unicode toolbar">
               <button className="button button-tool" type="button" onClick={() => applyEditorStyle('bold')}>
-                <span className="tool-glyph">𝗕</span>
+                <span className="tool-chip">B</span>
                 <span>Bold</span>
               </button>
               <button className="button button-tool" type="button" onClick={() => applyEditorStyle('italic')}>
-                <span className="tool-glyph">𝘪</span>
+                <span className="tool-chip">I</span>
                 <span>Italic</span>
               </button>
               <button className="button button-tool" type="button" onClick={() => applyEditorStyle('boldItalic')}>
-                <span className="tool-glyph">𝙗𝙞</span>
-                <span>Bold italic</span>
+                <span className="tool-chip">BI</span>
+                <span>Bold + Italic</span>
               </button>
             </div>
 
@@ -314,30 +268,29 @@ function App() {
             <div className="output-block output-block-compact">
               <div className="frame-label-row">
                 <label htmlFor="editor-output">Unicode output</label>
-                <span>Paste block cuối cùng</span>
+                <span>Khối text cuối cùng để copy</span>
               </div>
               <textarea id="editor-output" value={editorText} readOnly />
             </div>
           </article>
 
           <aside className="side-stack">
-            <article className="panel panel-side panel-note">
-              <p className="section-label">Tool rules</p>
-              <h3>Làm đúng một việc, nhưng làm rõ.</h3>
-              <ul className="guide-list">
-                <li>Editor là surface chính, output là secondary.</li>
-                <li>Toolbar ít nút, nhưng hit target lớn và dễ scan.</li>
-                <li>Không ép user nhìn cùng lúc cả markdown lẫn selection.</li>
-              </ul>
+            <article className="panel panel-side">
+              <p className="section-label">How to use</p>
+              <ol className="guide-list guide-list-ordered">
+                <li>Bôi đen đoạn cần nhấn.</li>
+                <li>Chọn đúng style muốn áp.</li>
+                <li>Copy output plain text để paste ra ngoài.</li>
+              </ol>
             </article>
 
-            <article className="panel panel-side panel-note">
-              <p className="section-label">Unsafe zones</p>
-              <div className="pill-row pill-row-wrap">
-                <span className="status-pill">Code</span>
-                <span className="status-pill">Email</span>
-                <span className="status-pill">URL</span>
-                <span className="status-pill">Commands</span>
+            <article className="panel panel-side">
+              <p className="section-label">Good fits</p>
+              <div className="pill-row">
+                <span className="status-pill">Headline</span>
+                <span className="status-pill">Bio</span>
+                <span className="status-pill">Post</span>
+                <span className="status-pill">Caption</span>
               </div>
             </article>
           </aside>
@@ -348,10 +301,10 @@ function App() {
             <div className="panel-head">
               <div>
                 <p className="section-label">{PAGE_COPY.markdown.kicker}</p>
-                <h2>Markdown lab</h2>
+                <h2>Markdown converter</h2>
               </div>
               <div className="panel-actions">
-                <button className="button button-ghost" type="button" onClick={resetMarkdown}>
+                <button className="button button-secondary" type="button" onClick={resetMarkdown}>
                   Reset
                 </button>
                 <button
@@ -364,7 +317,7 @@ function App() {
               </div>
             </div>
 
-            <div className="pill-row pill-row-wrap">
+            <div className="pill-row syntax-row">
               <span className="status-pill">**bold**</span>
               <span className="status-pill">*italic*</span>
               <span className="status-pill">***bold italic***</span>
@@ -398,29 +351,31 @@ function App() {
             <div className="output-block">
               <div className="frame-label-row">
                 <label htmlFor="markdown-output">Converted output</label>
-                <span>Plain-text sau khi bóc markdown</span>
+                <span>Plain text sau khi bóc markdown</span>
               </div>
               <textarea id="markdown-output" value={markdownOutput} readOnly />
             </div>
 
-            <button className="button button-apply" type="button" onClick={pushMarkdownToEditor}>
-              Chuyển sang Selection page để style tiếp
+            <button className="button button-primary button-wide" type="button" onClick={pushMarkdownToEditor}>
+              Đẩy sang selection editor
             </button>
           </article>
 
           <aside className="side-stack">
-            <article className="panel panel-side panel-note">
+            <article className="panel panel-side">
               <p className="section-label">Flow</p>
               <ol className="guide-list guide-list-ordered">
-                <li>Gõ ý bằng markdown ngắn.</li>
-                <li>Copy luôn, hoặc đẩy sang Selection page.</li>
-                <li>Nếu cần nhấn mạnh thêm, style tiếp từng đoạn.</li>
+                <li>Gõ bằng markdown ngắn.</li>
+                <li>Convert sang output plain text.</li>
+                <li>Nếu cần, đẩy sang selection page để chỉnh tiếp.</li>
               </ol>
             </article>
 
-            <article className="panel panel-side panel-note panel-accent">
-              <p className="section-label">Best use cases</p>
-              <h3>Headlines, social posts, product launches, profile bios.</h3>
+            <article className="panel panel-side">
+              <p className="section-label">Best for</p>
+              <p className="aside-copy">
+                Dùng khi bạn viết nhanh bằng cú pháp rồi mới quyết định đoạn nào cần nhấn mạnh hơn.
+              </p>
             </article>
           </aside>
         </section>

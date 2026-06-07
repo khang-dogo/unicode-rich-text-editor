@@ -1,29 +1,22 @@
-# Unicode Craft
+# Unicode Rich Text Editor
 
-Web app nhỏ để tạo **fake Unicode formatting** nhưng được tách flow rõ ràng hơn thay vì nhét mọi thứ vào một màn hình.
+Web app nhỏ để tạo **fake Unicode formatting** theo 2 flow rõ ràng:
+
+- `#selection`: edit trực tiếp bằng `contenteditable`, bôi đen rồi áp style
+- `#markdown`: viết markdown rồi convert sang Unicode plain text
 
 ## Tính năng
 
-- 2 workflow riêng bằng hash route:
-  - `#selection`: style trực tiếp bằng `contenteditable`
-  - `#markdown`: viết markdown rồi convert sang Unicode
-- Bôi đen text rồi áp dụng:
-  - `𝗕` Bold
-  - `𝘪` Italic
-  - `𝙗𝙞` Bold Italic
-- Convert markdown sang Unicode:
+- Áp style cho đoạn text đã chọn:
+  - Bold
+  - Italic
+  - Bold + Italic
+- Convert markdown:
   - `**bold**`
   - `*italic*`
   - `***bold italic***`
 - Copy output nhanh
-- Đẩy output từ markdown page sang selection page để style tiếp
-- Hero mark + loading/transition layer để UI có nhịp hơn
-
-## Design references in repo
-
-- `DESIGN.md`: design analysis cài từ `getdesign` để giữ visual direction nhất quán
-- `.agents/skills/design-taste-frontend/SKILL.md`: Taste Skill anti-slop frontend guidance
-- `.agents/skills/redesign-existing-projects/SKILL.md`: redesign audit/fix checklist cho các vòng polish tiếp theo
+- Đẩy output từ markdown page sang selection page để chỉnh tiếp
 
 ## Chạy local
 
