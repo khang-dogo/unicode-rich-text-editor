@@ -68,44 +68,197 @@ button {
   height: 120px;
 }
 
-.loading-card-stack span {
+.loading-card-stack > span {
   position: absolute;
-  display: grid;
-  place-items: center;
-  width: 80px;
-  height: 104px;
-  border-radius: 22px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 1.9rem;
   box-shadow: var(--shadow);
   animation: floatCard 1.15s ease-in-out infinite;
 }
 
-.loading-card-stack span:nth-child(1) {
-  left: 0;
-  top: 10px;
-  background: #111;
-  color: #fff;
-  transform: rotate(-12deg);
+.loading-card-stack > span:nth-child(1) {
+  animation-delay: 0s;
 }
 
-.loading-card-stack span:nth-child(2) {
-  left: 34px;
-  top: 0;
-  background: #fff;
-  color: #111;
-  border: 1px solid var(--line);
-  transform: rotate(8deg);
+.loading-card-stack > span:nth-child(2) {
   animation-delay: 0.12s;
 }
 
-.loading-card-stack span:nth-child(3) {
-  left: 68px;
-  top: 18px;
+.loading-card-stack > span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.icon-card,
+.hero-mark-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.icon-card {
+  width: 80px;
+  height: 104px;
+  padding: 20px 14px 14px;
+  border-radius: 22px;
+}
+
+.hero-mark-card {
+  width: 132px;
+  height: 164px;
+  padding: 28px 24px 20px;
+  gap: 14px;
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.icon-card-back,
+.hero-mark-card-back {
+  background: #111;
+  color: #fff;
+}
+
+.icon-card-mid,
+.hero-mark-card-mid {
+  background: #fff;
+  color: #111;
+  border-color: var(--line);
+}
+
+.icon-card-front,
+.hero-mark-card-front {
   background: linear-gradient(180deg, #2b62e2 0%, #1d4db6 100%);
   color: #fff;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.icon-card-back,
+.hero-mark-card-back {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.icon-card-dot,
+.icon-card-line {
+  display: block;
+  background: currentColor;
+}
+
+.icon-card-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+}
+
+.hero-mark-card .icon-card-dot {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-card-line {
+  height: 8px;
+  border-radius: 999px;
+  opacity: 0.88;
+}
+
+.hero-mark-card .icon-card-line {
+  height: 10px;
+}
+
+.icon-card-line-medium {
+  width: 100%;
+}
+
+.icon-card-line-short {
+  width: 66%;
+}
+
+.icon-card-line-tiny {
+  width: 42%;
+}
+
+.icon-card-accent {
+  width: 52%;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.hero-mark-card .icon-card-accent {
+  height: 28px;
+}
+
+.icon-card-mid .icon-card-accent,
+.hero-mark-card-mid .icon-card-accent {
+  background: rgba(30, 86, 216, 0.12);
+  border-color: rgba(30, 86, 216, 0.2);
+}
+
+.icon-card::before,
+.hero-mark-card::before,
+.icon-card::after,
+.hero-mark-card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.icon-card::before,
+.hero-mark-card::before {
+  right: 12px;
+  top: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.icon-card-mid::before,
+.hero-mark-card-mid::before {
+  background: rgba(17, 17, 17, 0.05);
+}
+
+.icon-card::after,
+.hero-mark-card::after {
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 42%);
+}
+
+.icon-card-back::after,
+.hero-mark-card-back::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+}
+
+.icon-card-mid::after,
+.hero-mark-card-mid::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent 42%);
+}
+
+.icon-card > *,
+.hero-mark-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.loading-card-stack .icon-card-back {
+  left: 0;
+  top: 10px;
+  transform: rotate(-12deg);
+}
+
+.loading-card-stack .icon-card-mid {
+  left: 34px;
+  top: 0;
+  transform: rotate(8deg);
+}
+
+.loading-card-stack .icon-card-front {
+  left: 68px;
+  top: 18px;
   transform: rotate(-4deg);
-  animation-delay: 0.24s;
 }
 
 .loading-copy {
@@ -140,41 +293,21 @@ button {
   height: 200px;
 }
 
-.hero-mark-card {
-  position: absolute;
-  inset: auto;
-  display: grid;
-  place-items: center;
-  width: 132px;
-  height: 164px;
-  border-radius: 28px;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 2.6rem;
-}
-
 .hero-mark-card-back {
   left: 10px;
   top: 20px;
-  background: #111;
-  color: #fff;
   transform: rotate(-10deg);
 }
 
 .hero-mark-card-mid {
   left: 56px;
   top: 10px;
-  background: var(--surface-strong);
-  color: var(--ink);
   transform: rotate(8deg);
 }
 
 .hero-mark-card-front {
   left: 84px;
   top: 48px;
-  background: linear-gradient(180deg, #2b62e2 0%, #1d4db6 100%);
-  color: #fff;
   transform: rotate(-4deg);
 }
 

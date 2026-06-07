@@ -160,9 +160,21 @@ function App() {
     <main className="app-shell">
       <div className={`loading-layer ${isLoading ? 'is-visible' : ''}`} aria-hidden={!isLoading}>
         <div className="loading-card-stack">
-          <span>𝘈</span>
-          <span>𝗕</span>
-          <span>𝙗𝙞</span>
+          <span className="icon-card icon-card-back">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-short" />
+            <span className="icon-card-line icon-card-line-tiny" />
+          </span>
+          <span className="icon-card icon-card-mid">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-medium" />
+            <span className="icon-card-line icon-card-line-short" />
+          </span>
+          <span className="icon-card icon-card-front">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-medium" />
+            <span className="icon-card-accent" />
+          </span>
         </div>
         <div className="loading-copy">
           <p className="section-label">Preparing workspace</p>
@@ -171,9 +183,21 @@ function App() {
       </div>
       <header className="hero-shell">
         <div className="hero-mark" aria-hidden="true">
-          <div className="hero-mark-card hero-mark-card-back">𝘈</div>
-          <div className="hero-mark-card hero-mark-card-mid">𝗕</div>
-          <div className="hero-mark-card hero-mark-card-front">𝙗𝙞</div>
+          <div className="hero-mark-card hero-mark-card-back">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-short" />
+            <span className="icon-card-line icon-card-line-tiny" />
+          </div>
+          <div className="hero-mark-card hero-mark-card-mid">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-medium" />
+            <span className="icon-card-line icon-card-line-short" />
+          </div>
+          <div className="hero-mark-card hero-mark-card-front">
+            <span className="icon-card-dot" />
+            <span className="icon-card-line icon-card-line-medium" />
+            <span className="icon-card-accent" />
+          </div>
         </div>
 
         <div className="hero-copy">
