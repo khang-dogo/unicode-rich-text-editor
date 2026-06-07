@@ -1,0 +1,193 @@
+:root {
+  color: #e5ecff;
+  background: #09111f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(82, 144, 255, 0.22), transparent 32%),
+    linear-gradient(180deg, #08101e 0%, #0d1527 100%);
+}
+
+button,
+textarea,
+.editor-surface {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(1200px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.hero-card,
+.panel {
+  border: 1px solid rgba(151, 175, 255, 0.16);
+  border-radius: 24px;
+  background: rgba(10, 17, 33, 0.84);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.hero-card {
+  display: grid;
+  gap: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.eyebrow,
+.panel-kicker {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7ea7ff;
+}
+
+.hero-card h1,
+.panel h2 {
+  margin: 0;
+}
+
+.hero-copy {
+  margin: 12px 0 0;
+  max-width: 760px;
+  color: #c2cee8;
+  line-height: 1.6;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  border: 1px solid rgba(126, 167, 255, 0.3);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #dce6ff;
+  background: rgba(22, 37, 67, 0.9);
+}
+
+.grid-layout {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toolbar,
+.markdown-help {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolbar button,
+.ghost-button,
+.primary-button {
+  border: 1px solid rgba(126, 167, 255, 0.25);
+  border-radius: 14px;
+  padding: 11px 14px;
+  color: #ecf1ff;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.toolbar button,
+.primary-button {
+  background: linear-gradient(180deg, #3e6df4 0%, #2b4ec2 100%);
+}
+
+.ghost-button {
+  background: rgba(17, 29, 54, 0.95);
+}
+
+.toolbar button:hover,
+.ghost-button:hover,
+.primary-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(170, 194, 255, 0.55);
+}
+
+.editor-surface,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(131, 154, 207, 0.18);
+  border-radius: 18px;
+  background: rgba(7, 13, 25, 0.92);
+  color: #f5f7ff;
+}
+
+.editor-surface {
+  min-height: 240px;
+  padding: 18px;
+  outline: none;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.editor-surface:focus {
+  border-color: rgba(126, 167, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(126, 167, 255, 0.14);
+}
+
+.output-block {
+  display: grid;
+  gap: 8px;
+}
+
+.output-block label {
+  color: #aebddb;
+  font-size: 0.92rem;
+}
+
+textarea {
+  min-height: 170px;
+  resize: vertical;
+  padding: 16px;
+  line-height: 1.6;
+}
+
+.markdown-help span {
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(18, 28, 47, 1);
+  color: #b7c8ef;
+}
+
+@media (max-width: 900px) {
+  .grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-header {
+    flex-direction: column;
+  }
+}
