@@ -23,12 +23,12 @@ const MARKDOWN_SNIPPETS = [
 const PAGE_COPY = {
   selection: {
     kicker: 'Direct editing',
-    title: 'Edit trực tiếp rồi áp Unicode style lên đúng đoạn cần nhấn.',
-    body: 'Bôi đen một đoạn ngắn, bấm style, copy ra ngoài. Không giả làm word processor. Không nhồi quá nhiều panel.',
+    title: 'Áp fake Unicode trực tiếp, rồi copy ra ngoài.',
+    body: 'Bôi đen một đoạn ngắn, bấm style, copy output. Nhanh, sạch, không giả làm word processor.',
   },
   markdown: {
     kicker: 'Markdown conversion',
-    title: 'Gõ markdown trước, convert sang plain text sau, rồi paste đi nơi khác.',
+    title: 'Viết bằng markdown trước, đổi sang plain text sau.',
     body: 'Phù hợp khi bạn nghĩ bằng cú pháp `** * ***` trước. Viết, convert, copy hoặc đẩy sang selection page để chỉnh tiếp.',
   },
 } as const
@@ -147,43 +147,45 @@ function App() {
           <p className="hero-body">{PAGE_COPY[page].body}</p>
         </div>
 
-        <div className="hero-meta">
-          <div className="meta-card">
-            <span className="meta-label">Output</span>
-            <strong>Plain text</strong>
-            <p>Không phải rich text thật. Paste được vào bio, post, headline.</p>
+        <div className="hero-rail">
+          <div className="hero-meta">
+            <div className="meta-card">
+              <span className="meta-label">Output</span>
+              <strong>Plain text</strong>
+              <p>Không phải rich text thật. Paste được vào bio, post, headline.</p>
+            </div>
+            <div className="meta-card">
+              <span className="meta-label">Unsafe</span>
+              <strong>Code · URL · Email</strong>
+              <p>Đừng dùng fake Unicode cho thứ cần parse chính xác.</p>
+            </div>
           </div>
-          <div className="meta-card">
-            <span className="meta-label">Unsafe</span>
-            <strong>Code · URL · Email</strong>
-            <p>Đừng dùng fake Unicode cho thứ cần parse chính xác.</p>
-          </div>
-        </div>
 
-        <nav className="workflow-switcher" aria-label="Workflow switcher">
-          <button
-            className={`workflow-tab ${page === 'selection' ? 'is-active' : ''}`}
-            type="button"
-            onClick={() => setPageRoute('selection')}
-          >
-            <span className="workflow-step">01</span>
-            <span>
-              <strong>Selection</strong>
-              <small>Bôi đen rồi áp style</small>
-            </span>
-          </button>
-          <button
-            className={`workflow-tab ${page === 'markdown' ? 'is-active' : ''}`}
-            type="button"
-            onClick={() => setPageRoute('markdown')}
-          >
-            <span className="workflow-step">02</span>
-            <span>
-              <strong>Markdown</strong>
-              <small>Convert từ `** * ***`</small>
-            </span>
-          </button>
-        </nav>
+          <nav className="workflow-switcher" aria-label="Workflow switcher">
+            <button
+              className={`workflow-tab ${page === 'selection' ? 'is-active' : ''}`}
+              type="button"
+              onClick={() => setPageRoute('selection')}
+            >
+              <span className="workflow-step">01</span>
+              <span>
+                <strong>Selection</strong>
+                <small>Bôi đen rồi áp style</small>
+              </span>
+            </button>
+            <button
+              className={`workflow-tab ${page === 'markdown' ? 'is-active' : ''}`}
+              type="button"
+              onClick={() => setPageRoute('markdown')}
+            >
+              <span className="workflow-step">02</span>
+              <span>
+                <strong>Markdown</strong>
+                <small>Convert từ `** * ***`</small>
+              </span>
+            </button>
+          </nav>
+        </div>
       </header>
 
       {page === 'selection' ? (
